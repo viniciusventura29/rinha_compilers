@@ -1,0 +1,30 @@
+{
+  "name": ".\\source.rinha",
+  "expression": {
+    "kind": "Call",
+    "callee": {
+      "kind": "Var",
+      "text": "Print",
+      "location": { "start": 0, "end": 5, "filename": ".\\source.rinha" }
+    },
+    "arguments": [
+      {
+        "kind": "Binary",
+        "lhs": {
+          "kind": "Int",
+          "value": 1,
+          "location": { "start": 6, "end": 7, "filename": ".\\source.rinha" }
+        },
+        "op": "Add",
+        "rhs": {
+          "kind": "Int",
+          "value": 2,
+          "location": { "start": 8, "end": 9, "filename": ".\\source.rinha" }
+        },
+        "location": { "start": 6, "end": 9, "filename": ".\\source.rinha" }
+      }
+    ],
+    "location": { "start": 0, "end": 10, "filename": ".\\source.rinha" }
+  },
+  "location": { "start": 0, "end": 10, "filename": ".\\source.rinha" }
+}
