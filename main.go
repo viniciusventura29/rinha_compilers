@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"os"
 )
@@ -31,6 +32,7 @@ type Arguments []struct {
 		Kind  string `json:"kind"`
 		Value int
 	}
+	Value string `json:"value"`
 }
 
 func main() {
@@ -47,15 +49,35 @@ func main() {
 
 	json.Unmarshal(byteJson, &file)
 
-	print(interpreter(file))
+	interpreter(file)
 }
 
 func interpreter(file File) int {
-	if file.Expression.Arguments[0].Kind == "Binary" {
-		if file.Expression.Arguments[0].Op == "Add" {
-			var sum = file.Expression.Arguments[0].Lhs.Value + file.Expression.Arguments[0].Rhs.Value
-			return sum
+
+	switch file.Expression.Callee.Text {
+	case "Print":
+		fmt.Print(Operations(file.Expression.Arguments))
+	}
+
+	return 0
+}
+
+func Operations(arguments Arguments) interface{} {
+	switch arguments[0].Kind {
+	case "Binary":
+		if arguments[0].Op == "Add" {
+			if arguments[0].Lhs.Kind == "Str" || arguments[0].Rhs.Kind == "Str" {
+				newString := fmt.Sprintf("%v %v", arguments[0].Lhs.Value, arguments[0].Rhs.Value)
+				return newString
+			} else {
+				var sum = arguments[0].Lhs.Value + arguments[0].Rhs.Value
+				return sum
+			}
 		}
+	case "Str":
+		return arguments[0].Value
+	default:
+		panic(fmt.Sprintf("Unknown node kind: <%s>", arguments[0].Kind))
 	}
 	return 0
 }
